@@ -15,6 +15,6 @@ setup(
     long_description_content_type="text/markdown",
     url='https://github.com/lucapodo/pip-newton.git',
     license='MIT',
-    packages=['newtonmetrics'],
+    # packages=['newtonmetrics'],
     install_requires=['requests'],
 )
