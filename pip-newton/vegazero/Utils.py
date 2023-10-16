@@ -9,7 +9,7 @@ class Utils():
     def __init__(self) -> None:
         pass
 
-    def get_attribute_type(sef, word: str, dataset: str) -> tuple:
+    def get_attribute_type(self, word: str, dataset: str) -> tuple:
         # Convert the string to a Python list
         list_data = ast.literal_eval(dataset)
 
@@ -34,7 +34,7 @@ class Utils():
 
         return max_similarity_pair
     
-    def map_to_vis_domain(seff, val, name):
+    def map_to_vis_domain(self, val, name):
 
         if(val.lower() in ["datetime", "date", "timestamp"]):
             return "temporal"
