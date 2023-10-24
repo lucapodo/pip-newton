@@ -1,9 +1,74 @@
 
 from config.config import Config
+from vegazero.VegaZero2VegaLite import VegaZero2VegaLite
+import pandas as pd
+import altair as alt
+from draco import Draco
+from draco.schema import schema_from_dataframe
+import pandas as pd
+from termcolor import colored
+from draco.fact_utils import dict_to_facts, answer_set_to_dict
+from draco.run import run_clingo
 
 class Newton():
 
-    config = Config('/src/config/config.yaml').read_config()
+    # config = Config('/src/config/config.yaml').read_config()
 
     def __init__(self) -> None:
         pass
+
+    def NormalizeData(self, data, min=0, max=5):
+        return (data - min) / (max - min)
+
+    def compute_score(self, df_path, vegazero, groundtruth):
+        vz = VegaZero2VegaLite()
+        draco = Draco()
+        df = pd.read_csv(df_path)
+        isCompling = 0
+        l_hard = 0.9
+        l_sim = 0.5
+        l_soft = 0.05
+        l_acc = 1.5
+
+        try:
+            vegalite_gen_, vegazero_spec_ = vz.to_VegaLite(vegazero)
+            _, vegazero_ground_spec_ = vz.to_VegaLite(groundtruth)
+
+            sim = vz.vega_zero_groundtruth_similarity_score(vegazero, groundtruth)
+            
+            schema: dict = schema_from_dataframe(df) #Generating the data schema to extract the field types automatically
+            spec = dict_to_facts(schema | vegalite_gen_) #converte in fact e concatena data e vis
+            isVisCorrect = draco.check_spec(spec)
+            violations = len(draco.get_violations(spec))
+
+            isMarkCorrect = vegazero_spec_['mark'] == vegazero_ground_spec_['mark']
+            isXCorrect = vegazero_spec_['encoding']['x'] == vegazero_ground_spec_['encoding']['x']
+            isYCorrect = vegazero_spec_['encoding']['y']['y'] == vegazero_ground_spec_['encoding']['y']['y']
+
+            score = -l_hard*(1-isVisCorrect)+ l_sim * sim - l_soft * violations + l_acc * (isMarkCorrect + isXCorrect + isYCorrect)
+            if (score>=0):
+                return self.NormalizeData(score)
+            else:
+                return 0
+
+        except Exception as e:
+            print(colored(f'error vegalite compile : {e}', 'red'))
+
+        return 0
+
+    def test(self):
+        vegazero = "mark area data payments encoding x payment_type_code y aggregate average amount_paid group x"
+        ground = "mark area data payments encoding x payment_type_code y aggregate average amount_paid group x"
+        path = "./payments.csv"
+
+        print(self.compute_score(path, vegazero, ground))
+    
+
+n = Newton()
+n.test()
+
+        
+
+
+
+

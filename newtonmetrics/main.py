@@ -11,7 +11,7 @@ from draco.run import run_clingo
 import os 
 os.system('clear')
 
-vegazero = "mark area data payments encoding x payment_type_code y aggregate average amount_paid group x"
+vegazero = "mak area data payments encoding x payment_type_code y aggregate average amount_paid group x"
 ground = "mark line data payments encoding x payment_type_code y aggregate average amount_paid group x"
 
 vz = VegaZero2VegaLite()
@@ -21,7 +21,7 @@ df = pd.read_csv('./payments.csv')
 isCompling = False
 
 try:
-    vegalite_gen, _ = vz.to_VegaLite(vegazero, df)
+    # vegalite_gen, _ = vz.to_VegaLite(vegazero, df)
     vegalite_gen_, vegazero_spec_ = vz.to_VegaLite(vegazero)
     vegalite_gen_ground_, vegazero_ground_spec_ = vz.to_VegaLite(ground)
 
