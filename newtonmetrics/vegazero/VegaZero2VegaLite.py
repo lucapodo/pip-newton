@@ -289,7 +289,6 @@ class VegaZero2VegaLite(object):
         doc1 = json.dumps(groundtruth_grammar, sort_keys=True)
         doc2 = json.dumps(preidcted_grammar, sort_keys=True)
 
-        print(doc1)
         pattern = r'[{},":;]'
 
         doc1 = re.sub(pattern, "", doc1)

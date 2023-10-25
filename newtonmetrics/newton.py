@@ -46,22 +46,41 @@ class Newton():
             isYCorrect = vegazero_spec_['encoding']['y']['y'] == vegazero_ground_spec_['encoding']['y']['y']
 
             score = -l_hard*(1-isVisCorrect)+ l_sim * sim - l_soft * violations + l_acc * (isMarkCorrect + isXCorrect + isYCorrect)
+
+            res = {
+                "isCompiled": 1, 
+                "isVisCorrect": isVisCorrect,
+                "sim": sim,
+                "violations": violations,
+                "isMarkCorrect": isMarkCorrect,
+                "isXCorrect": isXCorrect,
+                "isYCorrect":isYCorrect
+            }
             if (score>=0):
-                return self.NormalizeData(score)
+                return [self.NormalizeData(score), res]
             else:
-                return 0
+                return [0, res]
 
         except Exception as e:
             print(colored(f'error vegalite compile : {e}', 'red'))
 
-        return 0
+        return {
+                "isCompiled": 0, 
+                "isVisCorrect": 0,
+                "sim": 0,
+                "violations": 0,
+                "isMarkCorrect": 0,
+                "isXCorrect": 0,
+                "isYCorrect":0
+            }
 
     def test(self):
         vegazero = "mark area data payments encoding x payment_type_code y aggregate average amount_paid group x"
         ground = "mark area data payments encoding x payment_type_code y aggregate average amount_paid group x"
         path = "./payments.csv"
 
-        print(self.compute_score(path, vegazero, ground))
+        print(self.compute_score(path, vegazero, ground)[0])
+        print(self.compute_score(path, vegazero, ground)[1])
     
 
 n = Newton()
