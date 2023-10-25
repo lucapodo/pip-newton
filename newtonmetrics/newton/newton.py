@@ -82,10 +82,6 @@ class Newton():
         print(self.compute_score(path, vegazero, ground)[0])
         print(self.compute_score(path, vegazero, ground)[1])
     
-
-n = Newton()
-n.test()
-
         
 
 
