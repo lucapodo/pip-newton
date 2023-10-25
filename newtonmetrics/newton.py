@@ -1,5 +1,5 @@
 
-from config.config import Config
+# from config.config import Config
 from vegazero.VegaZero2VegaLite import VegaZero2VegaLite
 import pandas as pd
 import altair as alt
