@@ -1,6 +1,6 @@
 
 # from config.config import Config
-from vegazero.VegaZero2VegaLite import VegaZero2VegaLite
+from newtonmetrics.vegazero.VegaZero2VegaLite import VegaZero2VegaLite
 import pandas as pd
 import altair as alt
 from draco import Draco
@@ -77,13 +77,8 @@ class Newton():
     def test(self):
         vegazero = "mark area data payments encoding x payment_type_code y aggregate average amount_paid group x"
         ground = "mark area data payments encoding x payment_type_code y aggregate average amount_paid group x"
-        path = "./payments.csv"
+        path = "../payments.csv"
 
         print(self.compute_score(path, vegazero, ground)[0])
         print(self.compute_score(path, vegazero, ground)[1])
     
-        
-
-
-
-
