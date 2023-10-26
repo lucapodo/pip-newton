@@ -16,7 +16,7 @@ class Newton(object):
     # config = Config('/src/config/config.yaml').read_config()
     vz = VegaZero2VegaLite()
     draco = Draco()
-    
+
     def __init__(self):
         pass
 
@@ -46,8 +46,8 @@ class Newton(object):
             }
 
         try:
-            vegalite_gen_, vegazero_spec_ = vz.to_VegaLite(vegazero)
-            _, vegazero_ground_spec_ = vz.to_VegaLite(groundtruth)
+            vegalite_gen_, vegazero_spec_ = self.vz.to_VegaLite(vegazero)
+            _, vegazero_ground_spec_ = self.vz.to_VegaLite(groundtruth)
             res['isCompiled'] = 1
         except Exception as e:
             res['isCompiled'] = 0
