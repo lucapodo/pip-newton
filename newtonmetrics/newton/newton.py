@@ -25,7 +25,7 @@ class Newton(object):
 
     def compute_score(self, df_path, vegazero, groundtruth):
         
-        df = pd.read_csv(df_path)
+        df = pd.read_csv(df_path, index_col=0)
 
         print(vegazero)
         print(groundtruth)
