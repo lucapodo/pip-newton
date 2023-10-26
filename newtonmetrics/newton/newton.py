@@ -66,15 +66,15 @@ class Newton(object):
             # print(colored(f'error vegalite compile : {e}', 'red'))
             pass
 
-        return {
-                "isCompiled": 0, 
-                "isVisCorrect": 0,
-                "sim": 0,
-                "violations": 0,
-                "isMarkCorrect": 0,
-                "isXCorrect": 0,
-                "isYCorrect":0
-            }
+            return {
+                    "isCompiled": 0, 
+                    "isVisCorrect": 0,
+                    "sim": 0,
+                    "violations": 0,
+                    "isMarkCorrect": 0,
+                    "isXCorrect": 0,
+                    "isYCorrect":0
+                }
 
     def test(self, path):
         vegazero = "mark area data payments encoding x payment_type_code y aggregate average amount_paid group x"
