@@ -63,7 +63,7 @@ class Newton(object):
                 return [0, res]
 
         except Exception as e:
-            print(colored(f'error vegalite compile : {e}', 'red'))
+            # print(colored(f'error vegalite compile : {e}', 'red'))
             pass
 
         return {
