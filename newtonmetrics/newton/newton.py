@@ -57,10 +57,7 @@ class Newton(object):
                 "isXCorrect": isXCorrect,
                 "isYCorrect":isYCorrect
             }
-            if (score>=0):
-                return [self.NormalizeData(score), res]
-            else:
-                return [0, res]
+            
 
         except Exception as e:
             # print(colored(f'error vegalite compile : {e}', 'red'))
@@ -75,6 +72,10 @@ class Newton(object):
                     "isXCorrect": 0,
                     "isYCorrect":0
                 }
+        if (score>=0):
+                return [self.NormalizeData(score), res]
+        else:
+            return [0, res]
 
     def test(self, path):
         vegazero = "mark area data payments encoding x payment_type_code y aggregate average amount_paid group x"
