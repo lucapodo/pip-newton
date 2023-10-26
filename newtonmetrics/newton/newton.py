@@ -64,6 +64,7 @@ class Newton(object):
 
         except Exception as e:
             print(colored(f'error vegalite compile : {e}', 'red'))
+            pass
 
         return {
                 "isCompiled": 0, 
