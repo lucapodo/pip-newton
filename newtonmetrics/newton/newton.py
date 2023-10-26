@@ -26,7 +26,7 @@ class Newton(object):
     def compute_score(self, df_path, vegazero, groundtruth):
         
         df = pd.read_csv(df_path, index_col=0)
-        
+
         isCompling = 0
         l_hard = 0.9
         l_sim = 0.5
@@ -68,7 +68,12 @@ class Newton(object):
             isYCorrect = vegazero_spec_['encoding']['y']['y'] == vegazero_ground_spec_['encoding']['y']['y']
             res['isYCorrect'] = isYCorrect
 
-            res['score'] = -l_hard*(1-isVisCorrect)+ l_sim * sim - l_soft * violations + l_acc * (isMarkCorrect + isXCorrect + isYCorrect)
+            score = -l_hard*(1-isVisCorrect)+ l_sim * sim - l_soft * violations + l_acc * (isMarkCorrect + isXCorrect + isYCorrect)
+            if (score>=0):
+                res['score'] =  self.NormalizeData(score)
+            else:
+                res['score'] = 0
+            
 
         except Exception as e:
             res['isCompiled'] = 0
