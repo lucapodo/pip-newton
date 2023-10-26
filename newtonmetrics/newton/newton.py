@@ -31,6 +31,8 @@ class Newton(object):
         l_soft = 0.05
         l_acc = 1.5
 
+        score= 0
+
         try:
             vegalite_gen_, vegazero_spec_ = vz.to_VegaLite(vegazero)
             _, vegazero_ground_spec_ = vz.to_VegaLite(groundtruth)
