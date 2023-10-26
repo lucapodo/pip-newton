@@ -25,7 +25,7 @@ class Newton(object):
         vz = VegaZero2VegaLite()
         draco = Draco()
         df = pd.read_csv(df_path)
-        print(df)
+
         isCompling = 0
         l_hard = 0.9
         l_sim = 0.5
@@ -63,7 +63,6 @@ class Newton(object):
             
 
         except Exception as e:
-            print('An error occurred:', e)
 
             res = {
                 "isCompiled": 0,
