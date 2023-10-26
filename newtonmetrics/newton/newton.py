@@ -144,11 +144,11 @@ class Newton(object):
 
 
 
-n = Newton()
+# n = Newton()
 
-vegazero =  "mark area data apartment_bookings encoding x booking_start_date y aggregate count booking_start_date transform group x sort y asc"
-ground = "mark area data apartment_bookings encoding x booking_start_date y aggregate count booking_start_date transform group x sort y asc"
+# vegazero =  "mark area data apartment_bookings encoding x booking_start_date y aggregate count booking_start_date transform group x sort y asc"
+# ground = "mark area data apartment_bookings encoding x booking_start_date y aggregate count booking_start_date transform group x sort y asc"
 
-n.test_draco()
+# n.test_draco()
     
     
