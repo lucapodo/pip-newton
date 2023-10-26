@@ -59,7 +59,6 @@ class Newton(object):
 
         try:
             vegalite_gen_, vegazero_spec_ = self.vz.to_VegaLite(vegazero)
-            print(vegalite_gen_)
 
             try:
                 _, vegazero_ground_spec_ = self.vz.to_VegaLite(groundtruth)
