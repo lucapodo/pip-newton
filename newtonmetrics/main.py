@@ -18,9 +18,6 @@ vz = VegaZero2VegaLite()
 d = Draco()
 df = pd.read_csv('./payments.csv')
 
-newton = Newton()
-newton.test()
-
 isCompling = False
 
 try:
