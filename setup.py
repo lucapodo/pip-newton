@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setup(
     name='newtonmetrics',
     packages=find_packages(),
-    version='0.0.1',
+    version='0.0.2',
     author='Luca Podo',
     author_email='lucapodo97@gmail.com',
     description='Testing installation of Package',
