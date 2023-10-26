@@ -63,14 +63,14 @@ class Newton(object):
             # print(colored(f'error vegalite compile : {e}', 'red'))
             print('An error occurred:', e)
 
-            return {
-                    "isCompiled": 0, 
-                    "isVisCorrect": 0,
-                    "sim": 0,
-                    "violations": 0,
-                    "isMarkCorrect": 0,
-                    "isXCorrect": 0,
-                    "isYCorrect":0
+            res = {
+                "isCompiled": 0,
+                "isVisCorrect": 0,
+                "sim": 0,
+                "violations": 0,
+                "isMarkCorrect": 0,
+                "isXCorrect": 0,
+                "isYCorrect": 0
                 }
         if (score>=0):
                 return [self.NormalizeData(score), res]
