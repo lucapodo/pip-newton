@@ -89,7 +89,7 @@ class Newton(object):
                 res['score'] = 0
 
         except Exception as e:
-            print(e)
+
             res['isCompiled'] = 0
        
         return res 
