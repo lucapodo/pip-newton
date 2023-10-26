@@ -27,6 +27,9 @@ class Newton(object):
         
         df = pd.read_csv(df_path)
 
+        print(vegazero)
+        print(groundtruth)
+
         isCompling = 0
         l_hard = 0.9
         l_sim = 0.5
