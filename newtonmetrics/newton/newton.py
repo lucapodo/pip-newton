@@ -37,7 +37,7 @@ class Newton(object):
         
         df = pd.read_csv(df_path, index_col=0)
    
-        # df = self.sanitize_column_names(df)
+        df = self.sanitize_column_names(df)
 
         isCompling = 0
         l_hard = 0.9
