@@ -10,7 +10,7 @@ from termcolor import colored
 from draco.fact_utils import dict_to_facts, answer_set_to_dict
 from draco.run import run_clingo
 
-class Newton():
+class Newton(object):
 
     # config = Config('/src/config/config.yaml').read_config()
 
