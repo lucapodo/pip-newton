@@ -1,3 +1,4 @@
+__author__ = "Luca Podo"
 
 # from config.config import Config
 from newtonmetrics.vegazero.VegaZero2VegaLite import VegaZero2VegaLite
@@ -14,7 +15,7 @@ class Newton(object):
 
     # config = Config('/src/config/config.yaml').read_config()
 
-    def __init__(self) -> None:
+    def __init__(self):
         pass
 
     def NormalizeData(self, data, min=0, max=5):
