@@ -59,33 +59,36 @@ class Newton(object):
 
         try:
             vegalite_gen_, vegazero_spec_ = self.vz.to_VegaLite(vegazero)
-            _, vegazero_ground_spec_ = self.vz.to_VegaLite(groundtruth)
-            res['isCompiled'] = 1
+            print(vegalite_gen_)
 
-            sim = self.vz.vega_zero_groundtruth_similarity_score(vegazero, groundtruth)
-            res['sim'] = sim
+            try:
+                _, vegazero_ground_spec_ = self.vz.to_VegaLite(groundtruth)
+                res['isCompiled'] = 1
 
-            schema: dict = schema_from_dataframe(df) #Generating the data schema to extract the field types automatically
-            spec = dict_to_facts(schema | vegalite_gen_) #converte in fact e concatena data e vis
-            isVisCorrect = self.draco.check_spec(spec)
-            res['isVisCorrect'] = isVisCorrect
-            violations = len(self.draco.get_violations(spec))
-            res['violations']=violations
+                sim = self.vz.vega_zero_groundtruth_similarity_score(vegazero, groundtruth)
+                res['sim'] = sim
 
-            isMarkCorrect = vegazero_spec_['mark'] == vegazero_ground_spec_['mark']
-            res['isMarkCorrect'] = isMarkCorrect
-            isXCorrect = vegazero_spec_['encoding']['x'] == vegazero_ground_spec_['encoding']['x']
-            res['isXCorrect'] = isXCorrect
-            isYCorrect = vegazero_spec_['encoding']['y']['y'] == vegazero_ground_spec_['encoding']['y']['y']
-            res['isYCorrect'] = isYCorrect
+                schema: dict = schema_from_dataframe(df) #Generating the data schema to extract the field types automatically
+                spec = dict_to_facts(schema | vegalite_gen_) #converte in fact e concatena data e vis
+                isVisCorrect = self.draco.check_spec(spec)
+                res['isVisCorrect'] = isVisCorrect
+                violations = len(self.draco.get_violations(spec))
+                res['violations']=violations
 
-            score = -l_hard*(1-isVisCorrect)+ l_sim * sim - l_soft * violations + l_acc * (isMarkCorrect + isXCorrect + isYCorrect)
-            if (score>=0):
-                res['score'] =  self.NormalizeData(score)
-            else:
-                res['score'] = 0
-            
+                isMarkCorrect = vegazero_spec_['mark'] == vegazero_ground_spec_['mark']
+                res['isMarkCorrect'] = isMarkCorrect
+                isXCorrect = vegazero_spec_['encoding']['x'] == vegazero_ground_spec_['encoding']['x']
+                res['isXCorrect'] = isXCorrect
+                isYCorrect = vegazero_spec_['encoding']['y']['y'] == vegazero_ground_spec_['encoding']['y']['y']
+                res['isYCorrect'] = isYCorrect
 
+                score = -l_hard*(1-isVisCorrect)+ l_sim * sim - l_soft * violations + l_acc * (isMarkCorrect + isXCorrect + isYCorrect)
+                if (score>=0):
+                    res['score'] =  self.NormalizeData(score)
+                else:
+                    res['score'] = 0
+            except:
+                res['isCompiled'] = 0
         except Exception as e:
             res['isCompiled'] = 0
 
