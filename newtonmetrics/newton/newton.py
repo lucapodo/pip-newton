@@ -26,10 +26,7 @@ class Newton(object):
     def compute_score(self, df_path, vegazero, groundtruth):
         
         df = pd.read_csv(df_path, index_col=0)
-
-        print(vegazero)
-        print(groundtruth)
-
+        
         isCompling = 0
         l_hard = 0.9
         l_sim = 0.5
