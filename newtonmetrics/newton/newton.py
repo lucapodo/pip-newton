@@ -95,8 +95,8 @@ class Newton(object):
             
         # sim = vz.vega_zero_groundtruth_similarity_score(vegazero, groundtruth)
         
-        schema: dict = schema_from_dataframe(df) #Generating the data schema to extract the field types automatically
-        spec = dict_to_facts(schema | vegalite_gen_) #converte in fact e concatena data e vis
+        # schema: dict = schema_from_dataframe(df) #Generating the data schema to extract the field types automatically
+        # spec = dict_to_facts(schema | vegalite_gen_) #converte in fact e concatena data e vis
         # isVisCorrect = self.draco.check_spec(self.spec)
         # violations = len(self.draco.get_violations(self.spec))
 
