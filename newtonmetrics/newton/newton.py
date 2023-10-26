@@ -14,7 +14,9 @@ from draco.run import run_clingo
 class Newton(object):
 
     # config = Config('/src/config/config.yaml').read_config()
-
+    vz = VegaZero2VegaLite()
+    draco = Draco()
+    
     def __init__(self):
         pass
 
@@ -22,8 +24,7 @@ class Newton(object):
         return (data - min) / (max - min)
 
     def compute_score(self, df_path, vegazero, groundtruth):
-        vz = VegaZero2VegaLite()
-        draco = Draco()
+        
         df = pd.read_csv(df_path)
 
         isCompling = 0
