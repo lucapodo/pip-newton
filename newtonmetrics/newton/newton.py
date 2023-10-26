@@ -77,7 +77,7 @@ class Newton(object):
     def test(self):
         vegazero = "mark area data payments encoding x payment_type_code y aggregate average amount_paid group x"
         ground = "mark area data payments encoding x payment_type_code y aggregate average amount_paid group x"
-        path = "../payments.csv"
+        path = "./payments.csv"
 
         print(self.compute_score(path, vegazero, ground)[0])
         print(self.compute_score(path, vegazero, ground)[1])

@@ -7,16 +7,19 @@ import pandas as pd
 from termcolor import colored
 from draco.fact_utils import dict_to_facts, answer_set_to_dict
 from draco.run import run_clingo
-
+from newton.newton import Newton
 import os 
 os.system('clear')
 
-vegazero = "mak area data payments encoding x payment_type_code y aggregate average amount_paid group x"
+vegazero = "mark area data payments encoding x payment_type_code y aggregate average amount_paid group x"
 ground = "mark line data payments encoding x payment_type_code y aggregate average amount_paid group x"
 
 vz = VegaZero2VegaLite()
 d = Draco()
 df = pd.read_csv('./payments.csv')
+
+newton = Newton()
+newton.test()
 
 isCompling = False
 
