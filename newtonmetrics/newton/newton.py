@@ -11,7 +11,7 @@ from termcolor import colored
 from draco.fact_utils import dict_to_facts, answer_set_to_dict
 from draco.run import run_clingo
 
-class Newton():
+class Newton(object):
 
     # config = Config('/src/config/config.yaml').read_config()
 
@@ -21,10 +21,10 @@ class Newton():
     def NormalizeData(self, data, min=0, max=5):
         return (data - min) / (max - min)
 
-    def compute_score(self, df, vegazero, groundtruth):
+    def compute_score(self, df_path, vegazero, groundtruth):
         vz = VegaZero2VegaLite()
         draco = Draco()
-
+        df = pd.read_csv(df_path)
         isCompling = 0
         l_hard = 0.9
         l_sim = 0.5
@@ -75,10 +75,11 @@ class Newton():
                 "isYCorrect":0
             }
 
-    def test(self, df):
+    def test(self, path):
         vegazero = "mark area data payments encoding x payment_type_code y aggregate average amount_paid group x"
         ground = "mark area data payments encoding x payment_type_code y aggregate average amount_paid group x"
 
-        print(self.compute_score(df, vegazero, ground)[0])
-        print(self.compute_score(df, vegazero, ground)[1])
+
+        print(self.compute_score(path, vegazero, ground)[0])
+        print(self.compute_score(path, vegazero, ground)[1])
     
