@@ -49,12 +49,12 @@ class Newton(object):
 
         res = {
                 "isCompiled": 0, 
-                "isVisCorrect": None,
-                "sim": None,
-                "violations": None,
-                "isMarkCorrect": None,
-                "isXCorrect": None,
-                "isYCorrect":None,
+                "isVisCorrect": False,
+                "sim": 0,
+                "violations": 0,
+                "isMarkCorrect": False,
+                "isXCorrect": False,
+                "isYCorrect":False,
                 "score": 0
             }
 
