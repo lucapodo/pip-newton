@@ -25,6 +25,7 @@ class Newton(object):
         vz = VegaZero2VegaLite()
         draco = Draco()
         df = pd.read_csv(df_path)
+        print(df)
         isCompling = 0
         l_hard = 0.9
         l_sim = 0.5
@@ -62,7 +63,6 @@ class Newton(object):
             
 
         except Exception as e:
-            # print(colored(f'error vegalite compile : {e}', 'red'))
             print('An error occurred:', e)
 
             res = {
@@ -74,6 +74,7 @@ class Newton(object):
                 "isXCorrect": 0,
                 "isYCorrect": 0
                 }
+            
         if (score>=0):
                 return [self.NormalizeData(score), res]
         else:
@@ -86,4 +87,5 @@ class Newton(object):
 
         print(self.compute_score(path, vegazero, ground)[0])
         print(self.compute_score(path, vegazero, ground)[1])
+    
     
