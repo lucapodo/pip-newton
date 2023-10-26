@@ -10,6 +10,7 @@ import pandas as pd
 from termcolor import colored
 from draco.fact_utils import dict_to_facts, answer_set_to_dict
 from draco.run import run_clingo
+import re
 
 class Newton(object):
 
@@ -23,9 +24,19 @@ class Newton(object):
     def NormalizeData(self, data, min=0, max=5):
         return (data - min) / (max - min)
 
+    def sanitize_column_names(self, df):
+        # Define a regular expression pattern to match non-alphabet characters
+        pattern = re.compile(r'[^a-zA-Z]')
+
+        # Use a lambda function to apply the pattern to each column name and replace non-alphabet characters with an empty string
+        df.columns = df.columns.to_series().apply(lambda x: re.sub(pattern, '', x))
+
+        return df
+
     def compute_score(self, df_path, vegazero, groundtruth):
         
         df = pd.read_csv(df_path, index_col=0)
+        df = self.sanitize_column_names(df)
 
         isCompling = 0
         l_hard = 0.9
