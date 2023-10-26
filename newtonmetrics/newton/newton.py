@@ -34,50 +34,51 @@ class Newton(object):
 
         score= 0
 
+        res = {
+                "isCompiled": 0, 
+                # "isVisCorrect": isVisCorrect,
+                # "sim": sim,
+                # "violations": violations,
+                # "isMarkCorrect": isMarkCorrect,
+                # "isXCorrect": isXCorrect,
+                # "isYCorrect":isYCorrect
+            }
+
         try:
             vegalite_gen_, vegazero_spec_ = vz.to_VegaLite(vegazero)
             _, vegazero_ground_spec_ = vz.to_VegaLite(groundtruth)
-
-            sim = vz.vega_zero_groundtruth_similarity_score(vegazero, groundtruth)
-            
-            schema: dict = schema_from_dataframe(df) #Generating the data schema to extract the field types automatically
-            spec = dict_to_facts(schema | vegalite_gen_) #converte in fact e concatena data e vis
-            isVisCorrect = draco.check_spec(spec)
-            violations = len(draco.get_violations(spec))
-
-            isMarkCorrect = vegazero_spec_['mark'] == vegazero_ground_spec_['mark']
-            isXCorrect = vegazero_spec_['encoding']['x'] == vegazero_ground_spec_['encoding']['x']
-            isYCorrect = vegazero_spec_['encoding']['y']['y'] == vegazero_ground_spec_['encoding']['y']['y']
-
-            score = -l_hard*(1-isVisCorrect)+ l_sim * sim - l_soft * violations + l_acc * (isMarkCorrect + isXCorrect + isYCorrect)
-
-            res = {
-                "isCompiled": 1, 
-                "isVisCorrect": isVisCorrect,
-                "sim": sim,
-                "violations": violations,
-                "isMarkCorrect": isMarkCorrect,
-                "isXCorrect": isXCorrect,
-                "isYCorrect":isYCorrect
-            }
-            
-
+            res['isCompiled'] = 1
         except Exception as e:
+            res['isCompiled'] = 0
 
-            res = {
-                "isCompiled": 0,
-                "isVisCorrect": 0,
-                "sim": 0,
-                "violations": 0,
-                "isMarkCorrect": 0,
-                "isXCorrect": 0,
-                "isYCorrect": 0
-                }
             
-        if (score>=0):
-                return [self.NormalizeData(score), res]
-        else:
-            return [0, res]
+        # sim = vz.vega_zero_groundtruth_similarity_score(vegazero, groundtruth)
+        
+        # schema: dict = schema_from_dataframe(df) #Generating the data schema to extract the field types automatically
+        # spec = dict_to_facts(schema | vegalite_gen_) #converte in fact e concatena data e vis
+        # isVisCorrect = draco.check_spec(spec)
+        # violations = len(draco.get_violations(spec))
+
+        # isMarkCorrect = vegazero_spec_['mark'] == vegazero_ground_spec_['mark']
+        # isXCorrect = vegazero_spec_['encoding']['x'] == vegazero_ground_spec_['encoding']['x']
+        # isYCorrect = vegazero_spec_['encoding']['y']['y'] == vegazero_ground_spec_['encoding']['y']['y']
+
+        # score = -l_hard*(1-isVisCorrect)+ l_sim * sim - l_soft * violations + l_acc * (isMarkCorrect + isXCorrect + isYCorrect)
+
+        # res = {
+        #     "isCompiled": 1, 
+        #     "isVisCorrect": isVisCorrect,
+        #     "sim": sim,
+        #     "violations": violations,
+        #     "isMarkCorrect": isMarkCorrect,
+        #     "isXCorrect": isXCorrect,
+        #     "isYCorrect":isYCorrect
+        # }
+        return res 
+        # if (score>=0):
+        #         return [self.NormalizeData(score), res]
+        # else:
+        #     return [0, res]
 
     def test(self, path):
         vegazero = "mark area data payments encoding x payment_type_code y aggregate average amount_paid group x"
