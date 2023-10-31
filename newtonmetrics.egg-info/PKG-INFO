@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: newtonmetrics
+Version: 0.0.3
+Summary: Testing installation of Package
+Home-page: https://github.com/lucapodo/pip-newton.git
+Author: Luca Podo
+Author-email: lucapodo97@gmail.com
+License: MIT
+Description-Content-Type: text/markdown
+Requires-Dist: requests
+Requires-Dist: draco
+Requires-Dist: altair
+Requires-Dist: termcolor
+
+Pip-Newton libarary

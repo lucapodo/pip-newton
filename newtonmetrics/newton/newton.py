@@ -18,8 +18,13 @@ class Newton(object):
     vz = VegaZero2VegaLite()
     draco = Draco()
 
+    version_newton = "0.0.1"
+
     def __init__(self):
         pass
+
+    def version(self):
+        print (f"Tool version {self.version_newton}")
 
     def NormalizeData(self, data, min=0, max=5):
         return (data - min) / (max - min)
@@ -35,9 +40,9 @@ class Newton(object):
 
     def compute_score(self, df_path, vegazero, groundtruth):
         
-        df = pd.read_csv(df_path, index_col=0)
+        # df = pd.read_csv(df_path, index_col=0)
    
-        df = self.sanitize_column_names(df)
+        # df = self.sanitize_column_names(df)
 
         isCompling = 0
         l_hard = 0.9
@@ -45,52 +50,88 @@ class Newton(object):
         l_soft = 0.05
         l_acc = 1.5
 
+        sim = 0
+        isMarkCorrect = False
+        isXCorrect =  False
+        isYCorrect = False
+
         score= 0
 
         res = {
-                "isCompiled": 0, 
-                "isVisCorrect": False,
-                "sim": 0,
-                "violations": 0,
-                "isMarkCorrect": False,
-                "isXCorrect": False,
-                "isYCorrect":False,
-                "score": 0
+                "isCompiled": None, 
+                "isVisCorrect": None,
+                "sim": None,
+                "violations": None,
+                "isMarkCorrect": None,
+                "isXCorrect": None,
+                "isYCorrect": None,
+                "score": None,
+                "isCompiled_g": None
             }
 
         try:
-            vegalite_gen_, vegazero_spec_ = self.vz.to_VegaLite(vegazero)
-            _, vegazero_ground_spec_ = self.vz.to_VegaLite(groundtruth)
+            _, vegazero_spec_ = self.vz.to_VegaLite(vegazero)
             res['isCompiled'] = 1
-
-            sim = self.vz.vega_zero_groundtruth_similarity_score(vegazero, groundtruth)
-            res['sim'] = sim
-
+        except Exception as e:
+            res['isCompiled'] = 0
+        
+        try:
+            _, vegazero_ground_spec_ = self.vz.to_VegaLite(groundtruth)
+            res['isCompiled_g'] = 1
+        except Exception as e:
+            res['isCompiled_g'] = 0
+        
+        try:
             isMarkCorrect = vegazero_spec_['mark'] == vegazero_ground_spec_['mark']
             res['isMarkCorrect'] = isMarkCorrect
+        except Exception as e:
+            res['isMarkCorrect'] = False
+        
+        try:
             isXCorrect = vegazero_spec_['encoding']['x'] == vegazero_ground_spec_['encoding']['x']
             res['isXCorrect'] = isXCorrect
+        except Exception as e:
+            res['isXCorrect'] = False
+        
+        try:
             isYCorrect = vegazero_spec_['encoding']['y']['y'] == vegazero_ground_spec_['encoding']['y']['y']
             res['isYCorrect'] = isYCorrect
+        except Exception as e:
+            res['isYCorrect'] = False
+        
+        try:
+            sim = self.vz.vega_zero_groundtruth_similarity_score(vegazero, groundtruth)
+            res['sim'] = sim
+        except Exception as e:
+            res['sim'] = -1
+            
+        
+
+        # if(res['isCompiled_g']==1 and res['isCompiled']==1):
+
+        #     sim = self.vz.vega_zero_groundtruth_similarity_score(vegazero, groundtruth)
+        #     res['sim'] = sim       
 
             # try:
-            schema: dict = schema_from_dataframe(df) #Generating the data schema to extract the field types automatically
-            spec = dict_to_facts(schema | vegalite_gen_) #converte in fact e concatena data e vis
-            isVisCorrect = self.draco.check_spec(spec)
-            res['isVisCorrect'] = isVisCorrect
-            violations = len(self.draco.get_violations(spec))
-            res['violations']=violations
+            #     schema: dict = schema_from_dataframe(df) #Generating the data schema to extract the field types automatically
+            #     spec = dict_to_facts(schema | vegalite_gen_) #converte in fact e concatena data e vis
+            #     isVisCorrect = self.draco.check_spec(spec)
+            #     res['isVisCorrect'] = isVisCorrect
+            #     violations = len(self.draco.get_violations(spec))
+            #     res['violations'] = violations
+            # except Exception as e:
+            #     res['isVisCorrect'] = False
+            #     res['violations'] = False
+            
+        # score = l_sim * sim + l_acc * (isMarkCorrect + isXCorrect + isYCorrect)
+        # score = -l_hard*(1-isVisCorrect)+ l_sim * sim - l_soft * violations + l_acc * (isMarkCorrect + isXCorrect + isYCorrect)
 
-            score = -l_hard*(1-isVisCorrect)+ l_sim * sim - l_soft * violations + l_acc * (isMarkCorrect + isXCorrect + isYCorrect)
-
-            if (score>=0):
-                res['score'] =  self.NormalizeData(score)
-            else:
-                res['score'] = 0
-
-        except Exception as e:
-
-            res['isCompiled'] = 0
+        # if (score>=0):
+        #     res['score'] =  self.NormalizeData(1)
+        # else:
+        #     res['score'] = 0
+        
+       
        
         return res 
         
