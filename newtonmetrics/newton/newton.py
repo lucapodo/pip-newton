@@ -44,11 +44,13 @@ class Newton(object):
    
         # df = self.sanitize_column_names(df)
 
-        isCompling = 0
-        l_hard = 0.9
-        l_sim = 0.5
-        l_soft = 0.05
-        l_acc = 1.5
+        # isCompling = 0
+        # l_hard = 0.9
+        l_sim = 0.1
+        # l_soft = 0.05
+        l_acc_mark = 0.3
+        l_acc_x = 0.1
+        l_acc_y = 0.1
 
         sim = 0
         isMarkCorrect = False
@@ -59,9 +61,9 @@ class Newton(object):
 
         res = {
                 "isCompiled": None, 
-                "isVisCorrect": None,
+                # "isVisCorrect": None,
                 "sim": None,
-                "violations": None,
+                # "violations": None,
                 "isMarkCorrect": None,
                 "isXCorrect": None,
                 "isYCorrect": None,
@@ -72,8 +74,10 @@ class Newton(object):
         try:
             _, vegazero_spec_ = self.vz.to_VegaLite(vegazero)
             res['isCompiled'] = 1
+            isCompiled = True
         except Exception as e:
             res['isCompiled'] = 0
+            isCompiled = False
         
         try:
             _, vegazero_ground_spec_ = self.vz.to_VegaLite(groundtruth)
@@ -85,25 +89,29 @@ class Newton(object):
             isMarkCorrect = vegazero_spec_['mark'] == vegazero_ground_spec_['mark']
             res['isMarkCorrect'] = isMarkCorrect
         except Exception as e:
-            res['isMarkCorrect'] = False
+            res['isMarkCorrect'] = None
         
         try:
             isXCorrect = vegazero_spec_['encoding']['x'] == vegazero_ground_spec_['encoding']['x']
             res['isXCorrect'] = isXCorrect
         except Exception as e:
-            res['isXCorrect'] = False
+            res['isXCorrect'] = None
         
         try:
             isYCorrect = vegazero_spec_['encoding']['y']['y'] == vegazero_ground_spec_['encoding']['y']['y']
             res['isYCorrect'] = isYCorrect
         except Exception as e:
-            res['isYCorrect'] = False
+            res['isYCorrect'] = None
         
         try:
             sim = self.vz.vega_zero_groundtruth_similarity_score(vegazero, groundtruth)
             res['sim'] = sim
         except Exception as e:
             res['sim'] = -1
+        
+        
+        score =  isCompiled*(0.4 + l_acc_mark * isMarkCorrect + l_acc_x * isXCorrect + l_acc_y * isYCorrect + sim * l_sim)
+        res['score'] = score
             
         
 
