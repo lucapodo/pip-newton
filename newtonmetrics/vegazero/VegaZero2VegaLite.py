@@ -213,6 +213,8 @@ class VegaZero2VegaLite(object):
                     self.VegaLiteSpec[VegaZero['mark']]['encoding']['x']['timeUnit'] = 'week'
                 else:
                     print('Unknown binning step.')
+                    raise Exception("Unknown binning step.")
+
 
         if VegaZero['transform']['filter'] != '':
             if 'transform' not in self.VegaLiteSpec[VegaZero['mark']]:
