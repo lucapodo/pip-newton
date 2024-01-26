@@ -37,6 +37,18 @@ class Newton(object):
         df.columns = df.columns.to_series().apply(lambda x: re.sub(pattern, '', x))
 
         return df
+    
+    def jaccard_similarity(list1, list2):
+        intersection = len(list(set(list1).intersection(list2)))
+        union = (len(set(list1)) + len(set(list2))) - intersection
+        return float(intersection) / union
+    
+    def compute_score_raff(self, vegazero, groundtruth):
+        score = 0
+
+        score = self.jaccard_similarity(vegazero, groundtruth)
+
+        return score
 
     def compute_score(self, df_path, vegazero, groundtruth):
         
