@@ -38,7 +38,7 @@ class Newton(object):
 
         return df
     
-    def jaccard_similarity(list1, list2):
+    def jaccard_similarity(slef, list1, list2):
         intersection = len(list(set(list1).intersection(list2)))
         union = (len(set(list1)) + len(set(list2))) - intersection
         return float(intersection) / union
