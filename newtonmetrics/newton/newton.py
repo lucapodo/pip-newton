@@ -38,15 +38,48 @@ class Newton(object):
 
         return df
     
-    def jaccard_similarity(slef, list1, list2):
+    def jaccard_similarity(self, list1, list2):
         intersection = len(list(set(list1).intersection(list2)))
         union = (len(set(list1)) + len(set(list2))) - intersection
         return float(intersection) / union
     
     def compute_score_raff(self, vegazero, groundtruth):
         score = 0
+        graph_type = ''
+        graph_type_ground_truth = ''
+        prediction_list = vegazero.split(" ")
+        groundtruth_list = groundtruth.split(" ")
 
-        score = self.jaccard_similarity(vegazero, groundtruth)
+        # can compile
+        try:
+            _, vegazero_spec_ = self.vz.to_VegaLite(vegazero)
+            print('can compile')
+            score += 0.5
+        except Exception as e:
+            score -= 0.2
+
+        try:
+            _, vegazero_ground_spec_ = self.vz.to_VegaLite(groundtruth)
+        except Exception as e:
+            print("******ground truth didn't compile****")
+        
+        try:
+            graph_type = vegazero_spec_['mark'] 
+            graph_type_ground_truth = vegazero_ground_spec_['mark']
+            if graph_type_ground_truth == graph_type and graph_type == 'bar':
+                print('bar equal')
+                score += 0.2
+            elif graph_type_ground_truth == graph_type:
+                print('not bar equal')
+                score += 0.4
+            else:
+                score -= 0.2
+        except Exception as e:
+            score -= 0.5
+    
+        
+
+        score += self.jaccard_similarity(prediction_list, groundtruth_list) * 0.5
 
         return score
 
@@ -124,34 +157,6 @@ class Newton(object):
         
         score =  isCompiled*(0.4 + l_acc_mark * isMarkCorrect + l_acc_x * isXCorrect + l_acc_y * isYCorrect + sim * l_sim)
         res['score'] = score
-            
-        
-
-        # if(res['isCompiled_g']==1 and res['isCompiled']==1):
-
-        #     sim = self.vz.vega_zero_groundtruth_similarity_score(vegazero, groundtruth)
-        #     res['sim'] = sim       
-
-            # try:
-            #     schema: dict = schema_from_dataframe(df) #Generating the data schema to extract the field types automatically
-            #     spec = dict_to_facts(schema | vegalite_gen_) #converte in fact e concatena data e vis
-            #     isVisCorrect = self.draco.check_spec(spec)
-            #     res['isVisCorrect'] = isVisCorrect
-            #     violations = len(self.draco.get_violations(spec))
-            #     res['violations'] = violations
-            # except Exception as e:
-            #     res['isVisCorrect'] = False
-            #     res['violations'] = False
-            
-        # score = l_sim * sim + l_acc * (isMarkCorrect + isXCorrect + isYCorrect)
-        # score = -l_hard*(1-isVisCorrect)+ l_sim * sim - l_soft * violations + l_acc * (isMarkCorrect + isXCorrect + isYCorrect)
-
-        # if (score>=0):
-        #     res['score'] =  self.NormalizeData(1)
-        # else:
-        #     res['score'] = 0
-        
-       
        
         return res 
         
