@@ -62,6 +62,7 @@ class Newton(object):
             _, vegazero_ground_spec_ = self.vz.to_VegaLite(groundtruth)
         except Exception as e:
             print("******ground truth didn't compile****")
+            return self.jaccard_similarity(prediction_list, groundtruth_list)
         
         try:
             graph_type = vegazero_spec_['mark'] 
