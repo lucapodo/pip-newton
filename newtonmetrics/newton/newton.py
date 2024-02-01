@@ -67,14 +67,16 @@ class Newton(object):
         try:
             graph_type = vegazero_spec_['mark'] 
             graph_type_ground_truth = vegazero_ground_spec_['mark']
-            if graph_type_ground_truth == graph_type and graph_type == 'bar':
-                print('bar equal')
-                score += 0.2
-            elif graph_type_ground_truth == graph_type:
-                print('not bar equal')
-                score += 0.4
-            else:
-                score -= 0.2
+            if graph_type == 'bar':
+                if graph_type_ground_truth == graph_type:
+                    print('bar equal')
+                    score += 0.2
+                else:
+                    score -=0.2
+            else: 
+                if graph_type_ground_truth == graph_type:
+                    print('not bar equal')
+                    score += .5
         except Exception as e:
             score -= 0.5
     
