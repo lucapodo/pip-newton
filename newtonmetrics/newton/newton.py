@@ -72,7 +72,7 @@ class Newton(object):
                     print('bar equal')
                     score += 0.2
                 else:
-                    score -=0.2
+                    score -=0.5
             else: 
                 if graph_type_ground_truth == graph_type:
                     print('not bar equal')
