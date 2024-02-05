@@ -11,6 +11,7 @@ from termcolor import colored
 from draco.fact_utils import dict_to_facts, answer_set_to_dict
 from draco.run import run_clingo
 import re
+import math
 
 class Newton(object):
 
@@ -42,6 +43,9 @@ class Newton(object):
         intersection = len(list(set(list1).intersection(list2)))
         union = (len(set(list1)) + len(set(list2))) - intersection
         return float(intersection) / union
+
+    def sigmoid(x):
+        return 1 / (1 + math.exp(-x))
     
     def compute_score_raff(self, vegazero, groundtruth):
         score = 0
@@ -68,21 +72,22 @@ class Newton(object):
             graph_type = vegazero_spec_['mark'] 
             graph_type_ground_truth = vegazero_ground_spec_['mark']
             if graph_type == 'bar':
-                if graph_type_ground_truth == graph_type:
-                    print('bar equal')
-                    score += 0.2
-                else:
-                    score -=0.5
+                score -= 0.5
+                # if graph_type_ground_truth == graph_type:
+                #     print('bar equal')
+                #     score -= 0.2
+                # else:
+                #     score -=0.5
             else: 
                 if graph_type_ground_truth == graph_type:
                     print('not bar equal')
-                    score += .5
+                score += .5
         except Exception as e:
             score -= 0.5
     
         
 
-        score += self.jaccard_similarity(prediction_list, groundtruth_list) * 0.5
+        # score += self.jaccard_similarity(prediction_list, groundtruth_list) * 0.5
 
         return score
 
