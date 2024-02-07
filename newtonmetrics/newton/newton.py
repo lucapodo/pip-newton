@@ -83,7 +83,11 @@ class Newton(object):
                     print('not bar equal')
                 score += .5
         except Exception as e:
-            score -= 0.5
+            # score -= 0.5
+            if prediction_list[1] != 'bar':
+                score += 0.5
+            else:
+                score -= 0.3
     
         
 
@@ -212,11 +216,6 @@ class Newton(object):
             print(e)
             pass
             # break
-
-
-
-
-
 
 # n = Newton()
 
