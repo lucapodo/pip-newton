@@ -87,22 +87,15 @@ class Newton(object):
     
         
 
-        try:
-            transform = vegazero_spec_['transform'] 
-            print('Transform: ', transform)
-            transform_gt = vegazero_ground_spec_['transform']
-            if transform_gt == transform:
-                print('transform equal')
-                score += 2
-            else: 
-                print('transform not equal')
-                score -= 1
-        except Exception as e:
-            try:
-                transform_gt = vegazero_ground_spec_['transform']
-                score -= 2
-            except Exception as e:
-                print('no transform')
+        transform = vegazero_spec_['transform'] 
+        print('Transform: ', transform)
+        transform_gt = vegazero_ground_spec_['transform']
+        if transform_gt == transform:
+            print('transform equal')
+            score += 2
+        else: 
+            print('transform not equal')
+            score -= 1
 
         return score
 
