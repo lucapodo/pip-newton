@@ -60,14 +60,13 @@ class Newton(object):
             print('can compile')
             score += 1
         except Exception as e:
-            score -= 1
+            return -2
 
         try:
             _, vegazero_ground_spec_ = self.vz.to_VegaLite(groundtruth)
         except Exception as e:
             print("******ground truth didn't compile****")
-            return 1
-            return self.jaccard_similarity(prediction_list, groundtruth_list)
+            return (self.jaccard_similarity(prediction_list, groundtruth_list) * 4) - 2
         
         try:
             graph_type = vegazero_spec_['mark'] 
@@ -80,17 +79,30 @@ class Newton(object):
             else: 
                 if graph_type_ground_truth == graph_type:
                     print('not bar equal')
-                    score += 2
+                    score += 3
                 # else:
                 #     score -= 1
         except Exception as e:
-            # score -= 0.5
-            if prediction_list[1] == 'bar':
-                score -= 1
+            print('****we should not get here****')
     
         
 
-        # score += self.jaccard_similarity(prediction_list, groundtruth_list) * 2
+        try:
+            transform = vegazero_spec_['transform'] 
+            print('Transform: ', transform)
+            transform_gt = vegazero_ground_spec_['transform']
+            if transform_gt == transform:
+                print('transform equal')
+                score += 2
+            else: 
+                print('transform not equal')
+                score -= 1
+        except Exception as e:
+            try:
+                transform_gt = vegazero_ground_spec_['transform']
+                score -= 2
+            except Exception as e:
+                print('no transform')
 
         return score
 
