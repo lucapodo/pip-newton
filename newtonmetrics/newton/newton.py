@@ -47,6 +47,10 @@ class Newton(object):
     def sigmoid(x):
         return 1 / (1 + math.exp(-x))
     
+    def to_vegalight(self, vegazero):
+         _, vegalight = self.vz.to_VegaLite(vegazero)
+         return vegalight
+    
     def compute_score_raff(self, vegazero, groundtruth):
         score = 0
         graph_type = ''
@@ -220,6 +224,7 @@ class Newton(object):
             print(e)
             pass
             # break
+
 
 # n = Newton()
 
