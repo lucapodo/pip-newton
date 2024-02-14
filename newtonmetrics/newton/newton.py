@@ -101,7 +101,7 @@ class Newton(object):
         except Exception as e:
             print('****we should not get here****')
     
-
+        score += (self.jaccard_similarity(prediction_list, groundtruth_list) * 2) - 1
         return score
 
     def compute_score(self, df_path, vegazero, groundtruth):
