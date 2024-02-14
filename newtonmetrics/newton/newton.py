@@ -73,33 +73,34 @@ class Newton(object):
             return (self.jaccard_similarity(prediction_list, groundtruth_list) * 4) - 2
         
         try:
-            graph_type = vegazero_spec_['mark'] 
-            graph_type_ground_truth = vegazero_ground_spec_['mark']
-            if graph_type == 'bar':
-                if graph_type_ground_truth == graph_type:
-                    score += 1
-                else:
-                    score -= 2
-            else: 
-                if graph_type_ground_truth == graph_type:
-                    print('not bar equal')
-                    score += 3
-                # else:
-                #     score -= 1
+            data = vegazero_spec_['data'] 
+            data_ground_truth = vegazero_ground_spec_['data']
+            x = vegazero_spec_['encoding']['x'] 
+            x_gt = vegazero_ground_spec_['encoding']['x'] 
+            y = vegazero_spec_['encoding']['y']['y']
+            y_gt = vegazero_ground_spec_['encoding']['y']['y']
+
+            if data == data_ground_truth:
+                print('data equal')
+                score += 1
+            else:
+                score -= 1
+            
+            if x == x_gt:
+                print('x equal')
+                score += 1
+            else:
+                score -= 1
+
+            if y == y_gt:
+                print('y equal')
+                score += 1
+            else:
+                score -= 1
+            
         except Exception as e:
             print('****we should not get here****')
     
-        
-
-        transform = vegazero_spec_['transform'] 
-        print('Transform: ', transform)
-        transform_gt = vegazero_ground_spec_['transform']
-        if transform_gt == transform:
-            print('transform equal')
-            score += 2
-        else: 
-            print('transform not equal')
-            score -= 1
 
         return score
 
