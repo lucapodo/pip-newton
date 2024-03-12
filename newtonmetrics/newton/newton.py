@@ -4,12 +4,12 @@ __author__ = "Luca Podo"
 from newtonmetrics.vegazero.VegaZero2VegaLite import VegaZero2VegaLite
 import pandas as pd
 import altair as alt
-from draco import Draco
-from draco.schema import schema_from_dataframe
+# from draco import Draco
+# from draco.schema import schema_from_dataframe
 import pandas as pd
 from termcolor import colored
-from draco.fact_utils import dict_to_facts, answer_set_to_dict
-from draco.run import run_clingo
+# from draco.fact_utils import dict_to_facts, answer_set_to_dict
+# from draco.run import run_clingo
 import re
 import math
 
@@ -17,7 +17,7 @@ class Newton(object):
 
     # config = Config('/src/config/config.yaml').read_config()
     vz = VegaZero2VegaLite()
-    draco = Draco()
+    # draco = Draco()
 
     version_newton = "0.0.1"
 
@@ -39,7 +39,6 @@ class Newton(object):
 
         return df
     
-<<<<<<< HEAD
     def jaccard_similarity(self, list1, list2):
         intersection = len(list(set(list1).intersection(list2)))
         union = (len(set(list1)) + len(set(list2))) - intersection
@@ -103,18 +102,6 @@ class Newton(object):
             print('****we should not get here****')
     
         score += (self.jaccard_similarity(prediction_list, groundtruth_list) * 2) - 1
-=======
-    def jaccard_similarity(list1, list2):
-        intersection = len(list(set(list1).intersection(list2)))
-        union = (len(set(list1)) + len(set(list2))) - intersection
-        return float(intersection) / union
-    
-    def compute_score_raff(self, vegazero, groundtruth):
-        score = 0
-
-        score = self.jaccard_similarity(vegazero, groundtruth)
-
->>>>>>> 8c91020 (no draco)
         return score
 
     def compute_score(self, df_path, vegazero, groundtruth):
@@ -221,13 +208,13 @@ class Newton(object):
 
             vegalite_gen_, _ = self.vz.to_VegaLite(prediction)
 
-            schema: dict = schema_from_dataframe(df) #Generating the data schema to extract the field types automatically
-            spec = dict_to_facts(schema | vegalite_gen_) #converte in fact e concatena data e vis
+            # schema: dict = schema_from_dataframe(df) #Generating the data schema to extract the field types automatically
+            # spec = dict_to_facts(schema | vegalite_gen_) #converte in fact e concatena data e vis
           
-            if self.draco.check_spec(spec):
-                print('ciao')
-            else: 
-                print('errore')
+            # if self.draco.check_spec(spec):
+            #     print('ciao')
+            # else: 
+            #     print('errore')
             # if self.draco.check_spec(spec):
             #     print('cioa')
             #     yield spec
