@@ -16,5 +16,5 @@ setup(
     url='https://github.com/lucapodo/pip-newton.git',
     license='MIT',
     # packages=['newtonmetrics'],
-    install_requires=['requests', 'draco', 'altair', 'termcolor'],
+    install_requires=['requests', 'altair', 'termcolor'],
 )

@@ -39,6 +39,7 @@ class Newton(object):
 
         return df
     
+<<<<<<< HEAD
     def jaccard_similarity(self, list1, list2):
         intersection = len(list(set(list1).intersection(list2)))
         union = (len(set(list1)) + len(set(list2))) - intersection
@@ -102,6 +103,18 @@ class Newton(object):
             print('****we should not get here****')
     
         score += (self.jaccard_similarity(prediction_list, groundtruth_list) * 2) - 1
+=======
+    def jaccard_similarity(list1, list2):
+        intersection = len(list(set(list1).intersection(list2)))
+        union = (len(set(list1)) + len(set(list2))) - intersection
+        return float(intersection) / union
+    
+    def compute_score_raff(self, vegazero, groundtruth):
+        score = 0
+
+        score = self.jaccard_similarity(vegazero, groundtruth)
+
+>>>>>>> 8c91020 (no draco)
         return score
 
     def compute_score(self, df_path, vegazero, groundtruth):
