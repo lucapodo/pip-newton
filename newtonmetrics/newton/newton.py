@@ -51,6 +51,25 @@ class Newton(object):
          _, vegalight = self.vz.to_VegaLite(vegazero)
          return vegalight
     
+    def compute_score_100(self, vegazero, groundtruth):
+        score = 0
+        graph_type = ''
+        graph_type_ground_truth = ''
+        prediction_list = vegazero.split(" ")
+        groundtruth_list = groundtruth.split(" ")
+
+        # can compile
+        try:
+            _, vegazero_spec_ = self.vz.to_VegaLite(vegazero)
+            print('can compile')
+            score += 0.5
+        except Exception as e:
+            print('didnt compile')
+
+        score += self.jaccard_similarity(prediction_list, groundtruth_list) / 2
+
+        return score
+    
     def compute_score_raff(self, vegazero, groundtruth):
         score = 0
         graph_type = ''
