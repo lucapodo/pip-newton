@@ -51,6 +51,14 @@ class Newton(object):
          _, vegalight = self.vz.to_VegaLite(vegazero)
          return vegalight
     
+    def can_compile(self, vegazero, groundtruth):
+        # can compile
+        try:
+            _, vegazero_spec_ = self.vz.to_VegaLite(vegazero)
+            return True
+        except Exception as e:
+            return False
+    
     def compute_score_100(self, vegazero, groundtruth):
         score = 0
         graph_type = ''
