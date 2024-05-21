@@ -43,6 +43,12 @@ class Newton(object):
         intersection = len(list(set(list1).intersection(list2)))
         union = (len(set(list1)) + len(set(list2))) - intersection
         return float(intersection) / union
+    
+    def only_jaacard(self, vegazero, groundtruth):
+        prediction_list = vegazero.split(" ")
+        groundtruth_list = groundtruth.split(" ")
+        
+        return self.jaccard_similarity(prediction_list, groundtruth_list)
 
     def sigmoid(x):
         return 1 / (1 + math.exp(-x))
