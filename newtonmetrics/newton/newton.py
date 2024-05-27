@@ -59,11 +59,44 @@ class Newton(object):
     
     def can_compile(self, vegazero, groundtruth):
         # can compile
+
+        output = {
+            "compile": False,
+            "data": False,
+            "x": False,
+            "y": False
+        }
+
+        try:
+            _, vegazero_ground_spec_ = self.vz.to_VegaLite(groundtruth)
+        except Exception as e:
+            print("******ground truth didn't compile****")
+            return output
+        
         try:
             _, vegazero_spec_ = self.vz.to_VegaLite(vegazero)
-            return True
+
+            data = vegazero_spec_['data'] 
+            data_ground_truth = vegazero_ground_spec_['data']
+            x = vegazero_spec_['encoding']['x'] 
+            x_gt = vegazero_ground_spec_['encoding']['x'] 
+            y = vegazero_spec_['encoding']['y']['y']
+            y_gt = vegazero_ground_spec_['encoding']['y']['y']
+
+            if data == data_ground_truth:
+                print('data equal')
+                output["data"] = True
+            
+            if x == x_gt:
+                print('x equal')
+                output["x"] = True
+
+            if y == y_gt:
+                print('y equal')
+                output["y"] = True
+            return output
         except Exception as e:
-            return False
+            return output
     
     def compute_score_100(self, vegazero, groundtruth):
         score = 0
