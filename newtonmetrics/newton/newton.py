@@ -82,7 +82,7 @@ class Newton(object):
             x_gt = vegazero_ground_spec_['encoding']['x'] 
             y = vegazero_spec_['encoding']['y']['y']
             y_gt = vegazero_ground_spec_['encoding']['y']['y']
-
+            output["compile"] = True
             if data == data_ground_truth:
                 print('data equal')
                 output["data"] = True
